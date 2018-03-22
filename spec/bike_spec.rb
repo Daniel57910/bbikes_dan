@@ -16,6 +16,7 @@ describe Bike do
       # docking_station = DockingStation.new
       bike = Bike.new
       station.dock(bike, true)
+      #not working as station not able to call the dock class
       expect(bike.working).to eq false
     end
 end
