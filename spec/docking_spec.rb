@@ -30,7 +30,7 @@ describe 'DockingStation' do
 
       it "raises error when all the bikes are broken" do
         test_station = DockingStation.new
-        test_station.dock(Bike.new, true)
+        test_station.dock(Bike.new(false))
         expect {test_station.release_bike}.to raise_error "No bikes available"
       end
 
