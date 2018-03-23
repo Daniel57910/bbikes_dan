@@ -1,13 +1,16 @@
-require 'app'
-
 class Van
   attr_reader :van
-  def initialize
+  def initialize(bikes)
     @van = []
+    @bikerack = bikes
   end
 
   def collect_from_docking
-    @bikerack.each {|bike| @van << bike if bike.broken}
+    @bikerack.each { |bike|
+      if !bike.broken
+      @van << bike 
+      end
+    }
     return @van
   end
 end
