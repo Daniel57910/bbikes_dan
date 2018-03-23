@@ -1,7 +1,7 @@
 require 'app'
 
 describe 'DockingStation' do
-
+  
     it 'responds to release_bike' do
         expect(DockingStation.new).to respond_to(:release_bike)
     end
@@ -31,7 +31,8 @@ describe 'DockingStation' do
 
       it "raises error when all the bikes are broken" do
         test_station = DockingStation.new
-        test_station.dock(Bike.new(false))
+        bike = double(:bike, :working => false)
+        test_station.dock(bike)
         expect {test_station.release_bike}.to raise_error "No bikes available"
       end
 
@@ -41,25 +42,27 @@ describe 'DockingStation' do
       end
 
       it "returned bike is working (== true)" do
-        broken_bike = Bike.new
-        working_bike = Bike.new
+        broken_bike = double(:bike, :working => false)
+        working_bike = double(:bike, :working => true)
         test_station = DockingStation.new
 
         test_station.dock(working_bike)
-        test_station.dock(broken_bike, true)
+        test_station.dock(broken_bike)
         released_bike = test_station.release_bike
-        expect(released_bike.working).to eq true
+        expect(released_bike).to eq working_bike
       end
     end
 
     describe '#dock' do
       it 'raises error when someone tries to dock a bike at a full station (20 bikes)' do
-        test_station = DockingStation.new(Bike.new)
-        test_bike = Bike.new
-        19.times do test_station.dock(Bike.new) end
+        test_bike = double(:bike)
+        test_station = DockingStation.new(test_bike)
+        19.times do test_station.dock(test_bike) end
         #Bike.new called for new bike object passed in 19 times
         expect { test_station.dock(test_bike) }.to raise_error 'Station is full'
       end
+
+
 
 
 
